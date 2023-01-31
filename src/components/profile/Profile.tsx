@@ -1,6 +1,5 @@
 import React from "react";
 import { Block } from "baseui/block";
-import { Heading, HeadingLevel } from "baseui/heading";
 import { MessageCard } from "baseui/message-card";
 import { Grid, Cell, BEHAVIOR } from "baseui/layout-grid";
 
@@ -29,7 +28,11 @@ export default function Profile() {
             />
           </Cell>
           <Cell span={[12, 12, 8]}>
-           Test
+            <FeedPost
+              username={username}
+              date={"1 hour ago"}
+              text="Test 123 post component"
+            />
           </Cell>
         </Grid>
       </Block>
