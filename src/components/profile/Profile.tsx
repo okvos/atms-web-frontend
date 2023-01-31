@@ -9,17 +9,40 @@ import { toast } from "../../modules/notifications/toast";
 import {
   GetPostsByUserIdRequest,
   GetPostsByUserIdResponse,
-} from "../../util/api/models/feed/GetPostsByUserId";
+  GetProfileByUsernameRequest,
+  GetProfileByUsernameResponse,
+} from "../../util/api";
 import { Post } from "../../util/api/models/feed/Post";
+import { Profile as ProfileModel } from "../../util/api/models/profile/Profile";
 
 export default function Profile() {
   const { username } = useParams();
+  const [profile, setProfile] = useState<ProfileModel | null>(null);
   const [feedPosts, setFeedPosts] = useState<Post[]>([]);
 
-  let request = new GetPostsByUserIdRequest({
-    user_id: 1,
-  });
+  async function fetchProfile() {
+    if (!username) return toast("error", "Profile not found!");
+
+    // fetch profile
+    let request = new GetProfileByUsernameRequest({
+      username,
+    });
+
+    try {
+      let response: GetProfileByUsernameResponse = await request.execute();
+      setProfile(response.profile);
+
+      // fetch feed posts after profile fetch success
+      fetchFeedPosts();
+    } catch (e: any) {
+      toast("error", e.message);
+    }
+  }
+
   async function fetchFeedPosts() {
+    let request = new GetPostsByUserIdRequest({
+      user_id: 1,
+    });
     try {
       let response: GetPostsByUserIdResponse = await request.execute();
       setFeedPosts(response.posts);
@@ -29,10 +52,10 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    fetchFeedPosts();
+    fetchProfile();
   }, []);
 
-  if (!username) {
+  if (!profile) {
     return <></>;
   }
 
@@ -42,13 +65,13 @@ export default function Profile() {
         <Grid behavior={BEHAVIOR.fluid}>
           <Cell span={[12, 12, 4]}>
             <MessageCard
-              heading={username}
+              heading={profile.username}
               buttonLabel="Follow"
               onClick={() => alert("click")}
-              paragraph="hi welcome to my page!"
+              paragraph={profile.bio}
               image={{
                 ariaLabel: "Test",
-                src: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80",
+                src: profile.header_image_url,
               }}
             />
           </Cell>
@@ -58,7 +81,7 @@ export default function Profile() {
                 return (
                   <FeedPost
                     key={key}
-                    username={username}
+                    username={profile.username}
                     date={post.date}
                     text={post.text}
                   />
