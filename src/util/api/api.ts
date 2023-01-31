@@ -7,29 +7,39 @@ export enum HTTPMethod {
   PUT = "PUT",
   DELETE = "DELETE",
 }
+type HTTPBody = {
+  method: HTTPMethod;
+  body?: string;
+  headers?: object;
+};
 
 export async function apiRequest(
   method: HTTPMethod,
   path: string,
-  body?: object
+  body?: object | null
 ) {
-  return await fetch(`${API_URL}${path}`, {
+  let reqBody: HTTPBody = {
     method: method,
-    headers: {
+  };
+  if (body && typeof body === "object") {
+    reqBody.body = JSON.stringify(body);
+    reqBody.headers = {
       "Content-Type": "application/json",
-    },
-    body: typeof body === "object" ? JSON.stringify(body) : null,
-  });
+    };
+  }
+  return await fetch(`${API_URL}${path}`, reqBody as object);
 }
 
 export class APIRequest {
-  body = {};
+  body: object | null = {};
   path = "/foo";
   method = HTTPMethod.GET;
 
   async execute() {
+    if (this.method === HTTPMethod.GET)
+      this.body = null;
     const req = await apiRequest(this.method, this.path, this.body);
-    if (!req.ok || req.status === 500) {
+    if (!req || !req.ok || req.status === 500) {
       throw Error("Server error. Please try again later.");
     }
     let respJson;

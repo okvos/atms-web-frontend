@@ -11,7 +11,7 @@ import { LabelMedium } from "baseui/typography";
 
 type FeedPostProps = {
   username: string;
-  date: string;
+  date: number;
   text: string;
 };
 
@@ -34,7 +34,7 @@ export function FeedPost({ username, date, text }: FeedPostProps) {
           />
           <PostAuthorContainer>
             <LabelMedium>{username}</LabelMedium>
-            <PostTitleDate>{date}</PostTitleDate>
+            <PostTitleDate>{new Date(date * 1000).toString()}</PostTitleDate>
           </PostAuthorContainer>
         </PostTitleContainer>
 
