@@ -8,6 +8,7 @@ import {
   PostTitleDate,
 } from "./styled-components";
 import { LabelMedium } from "baseui/typography";
+import { PostInteractions } from "./post-interactions";
 
 type FeedPostProps = {
   username: string;
@@ -39,6 +40,8 @@ export function FeedPost({ username, date, text }: FeedPostProps) {
         </PostTitleContainer>
 
         <PostTextContainer>{text}</PostTextContainer>
+
+        <PostInteractions isLiked={true} />
       </div>
     </PostContainer>
   );

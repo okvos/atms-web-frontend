@@ -2,6 +2,8 @@ import { styled } from "baseui";
 
 export const PostTextContainer = styled("div", ({ $theme }) => ({
   ...$theme.typography.ParagraphSmall,
+  marginTop: "0.3em",
+  marginBottom: "1em",
 }));
 
 export const PostTitleContainer = styled("div", ({ $theme }) => ({
