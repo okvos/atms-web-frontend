@@ -7,6 +7,7 @@ import {
   AuthenticateResponse,
 } from "../../util/api/models/Authenticate";
 import { toast } from "../notifications/toast";
+import { useAuth } from "./auth";
 
 export function SignInForm(props: any) {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -14,8 +15,9 @@ export function SignInForm(props: any) {
   const usernameRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
 
+  const auth = useAuth();
+
   const signInUser = async (e: SyntheticEvent) => {
-    console.log(usernameRef.current.value);
     setIsLoggingIn(true);
 
     let request = new AuthenticateRequest({
@@ -24,6 +26,10 @@ export function SignInForm(props: any) {
     });
     try {
       let response: AuthenticateResponse = await request.execute();
+
+      if (response && response.user) {
+        auth.login(response.user.user_id, response.user.username);
+      }
     } catch (e: any) {
       setIsLoggingIn(false);
       toast("error", e.message);

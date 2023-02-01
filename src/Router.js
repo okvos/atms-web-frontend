@@ -3,7 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {NavBar} from "./modules";
 
-const SignIn = lazy(() => import("./components/account/SignIn"));
+const SignIn = lazy(() => import("./components/account/sign-in"));
 const Profile = lazy(() => import("./components/profile/Profile"));
 
 

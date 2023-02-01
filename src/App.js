@@ -2,10 +2,8 @@ import { useStyletron } from "baseui";
 import React, { useEffect } from "react";
 import "./App.css";
 import { AppRouter } from "./Router";
-import { Notifications } from "./modules/notifications/Notifications";
-import { Provider } from "react-redux";
-import { notificationStore } from "./modules/notifications/store/store";
 import { Toast } from "./modules/notifications/toast";
+import { AuthProvider } from "./modules";
 
 function setBodyColor(color) {
   document.documentElement.style.setProperty("--bodyColor", color);
@@ -20,11 +18,10 @@ export default function App() {
 
   return (
     <>
-      <Provider store={notificationStore}>
+      <AuthProvider>
         <Toast />
         <AppRouter />
-        <Notifications />
-      </Provider>
+      </AuthProvider>
     </>
   );
 }
