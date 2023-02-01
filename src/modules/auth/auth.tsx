@@ -44,6 +44,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       user_id,
       username,
     });
+    window.localStorage.setItem(
+      LOCALSTORAGE_KEY,
+      JSON.stringify({
+        user_id,
+        username,
+      })
+    );
   };
   return (
     <AuthContext.Provider value={{ account, login }}>
