@@ -4,7 +4,7 @@ import { MessageCard } from "baseui/message-card";
 import { Grid, Cell, BEHAVIOR } from "baseui/layout-grid";
 
 import { useParams } from "react-router-dom";
-import { FeedPost } from "../feed/post/FeedPost";
+import { FeedPost } from "../feed/post/feed-post";
 import { toast } from "../../modules/notifications/toast";
 import {
   GetPostsByUserIdRequest,
