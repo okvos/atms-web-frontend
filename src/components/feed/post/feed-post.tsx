@@ -16,6 +16,7 @@ import {
   LikePostResponseType,
 } from "../../../util/api/models/feed/LikePost";
 import { Post } from "../../../util/api/models/feed/Post";
+import moment from "moment";
 
 type FeedPostPropsType = {
   post: Post;
@@ -52,14 +53,14 @@ export function FeedPost({ post }: FeedPostPropsType) {
                 }),
               },
             }}
-            name={`id #${post.user_id}`}
+            name={post.username}
             size="scale1600"
             src="https://avatars.dicebear.com/api/human/yard.svg?width=285&mood=happy"
           />
           <PostAuthorContainer>
-            <LabelMedium>{post.user_id}</LabelMedium>
+            <LabelMedium>{post.username}</LabelMedium>
             <PostTitleDate>
-              {new Date(post.date * 1000).toString()}
+              {moment(post.date * 1000).fromNow()}
             </PostTitleDate>
           </PostAuthorContainer>
         </PostTitleContainer>

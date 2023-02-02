@@ -14,6 +14,7 @@ import {
 } from "../../util/api";
 import { Post } from "../../util/api/models/feed/Post";
 import { Profile as ProfileModel } from "../../util/api/models/profile/Profile";
+import {FeedPostList} from "../feed/post/feed-post-list";
 
 export default function Profile() {
   const { username } = useParams();
@@ -78,14 +79,7 @@ export default function Profile() {
           </Cell>
           <Cell span={[12, 12, 8]}>
             {feedPosts &&
-              feedPosts.map((post, key) => {
-                return (
-                  <FeedPost
-                    key={key}
-                    post={post}
-                  />
-                );
-              })}
+              <FeedPostList posts={feedPosts} />}
           </Cell>
         </Grid>
       </Block>

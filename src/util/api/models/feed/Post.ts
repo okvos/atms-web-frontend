@@ -4,4 +4,5 @@ export type Post = {
   date: number;
   text: string;
   is_liked: boolean;
+  username: string;
 };
