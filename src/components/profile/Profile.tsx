@@ -35,6 +35,7 @@ export default function Profile() {
       // fetch feed posts after profile fetch success
       fetchFeedPosts();
     } catch (e: any) {
+      console.log(e);
       toast("error", e.message);
     }
   }
@@ -81,9 +82,7 @@ export default function Profile() {
                 return (
                   <FeedPost
                     key={key}
-                    username={profile.username}
-                    date={post.date}
-                    text={post.text}
+                    post={post}
                   />
                 );
               })}
