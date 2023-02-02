@@ -29,3 +29,26 @@ export const PostContainer = styled("section", ({ $theme }) => ({
   color: $theme.colors.primary,
   boxShadow: `0 1px 2px ${$theme.borders.border500.borderColor}`,
 }));
+
+export const InteractionButtonGroupOverrides = {
+  Root: {
+    style: ({ $theme }: any) => ({
+      borderTop: `1.2px solid ${$theme.borders.border200.borderColor}`,
+      backgroundColor: $theme.colors.inputFill,
+      justifyContent: "space-around",
+      paddingTop: "0.5em",
+    }),
+  },
+};
+
+export const InteractionButtonOverrides = {
+  BaseButton: {
+    style: ({ $theme, $isSelected }: any) => ({
+      backgroundColor:
+          $isSelected === true
+              ? $theme.colors.inputFillActive
+              : $theme.colors.inputFill,
+      color: $theme.colors.buttonSecondaryText,
+    }),
+  },
+};

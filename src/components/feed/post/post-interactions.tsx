@@ -1,41 +1,32 @@
 import { ButtonGroup } from "baseui/button-group";
 import { Button } from "baseui/button";
-
-const ButtonGroupOverrides = {
-  Root: {
-    style: ({ $theme }: any) => ({
-      borderTop: `1.2px solid ${$theme.borders.border200.borderColor}`,
-      backgroundColor: $theme.colors.inputFill,
-      justifyContent: "space-around",
-      paddingTop: "0.5em",
-    }),
-  },
-};
-
-const ButtonOverrides = {
-  BaseButton: {
-    style: ({ $theme, $isSelected }: any) => ({
-      backgroundColor:
-        $isSelected === true
-          ? $theme.colors.inputFillActive
-          : $theme.colors.inputFill,
-      color: $theme.colors.buttonSecondaryText,
-    }),
-  },
-};
+import {
+  InteractionButtonOverrides,
+  InteractionButtonGroupOverrides,
+} from "./styled-components";
+import { useAuth } from "../../../modules";
+import { UnlikePostRequest } from "../../../util/api/models/feed/UnlikePost";
 
 type PostInteractionsProps = {
   isLiked?: boolean;
+  likePost: () => void;
 };
 
-export function PostInteractions({ isLiked }: PostInteractionsProps) {
+export function PostInteractions({ isLiked, likePost }: PostInteractionsProps) {
+  const { isLoggedIn } = useAuth();
+
   return (
-    <ButtonGroup overrides={ButtonGroupOverrides}>
-      <Button overrides={ButtonOverrides} isSelected={isLiked}>
-        Like
+    <ButtonGroup overrides={InteractionButtonGroupOverrides}>
+      <Button
+        overrides={InteractionButtonOverrides}
+        isSelected={isLiked}
+        disabled={!isLoggedIn}
+        onClick={likePost}
+      >
+        {isLiked === true ? "Unlike" : "Like"}
       </Button>
-      <Button overrides={ButtonOverrides}>Comments</Button>
-      <Button overrides={ButtonOverrides}>Share</Button>
+      <Button overrides={InteractionButtonOverrides}>Comments</Button>
+      <Button overrides={InteractionButtonOverrides}>Share</Button>
     </ButtonGroup>
   );
 }
