@@ -18,7 +18,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "@atms/components/*": ["components/*"],
+      "@atms/models/*": ["util/api/models/*"],
+      "@atms/modules/*": ["modules/*"]
+    }
   },
   "include": [
     "src"

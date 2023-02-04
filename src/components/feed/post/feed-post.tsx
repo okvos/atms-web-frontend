@@ -9,13 +9,12 @@ import {
 } from "./styled-components";
 import { LabelMedium } from "baseui/typography";
 import { PostInteractions } from "./post-interactions";
-import { useAuth } from "../../../modules";
-import { UnlikePostRequest } from "../../../util/api/models/feed/UnlikePost";
+import { UnlikePostRequest } from "@atms/models/feed/UnlikePost";
 import {
   LikePostRequest,
   LikePostResponseType,
-} from "../../../util/api/models/feed/LikePost";
-import { Post } from "../../../util/api/models/feed/Post";
+} from "@atms/models/feed/LikePost";
+import { Post } from "@atms/models/feed/Post";
 import moment from "moment";
 
 type FeedPostPropsType = {
@@ -23,7 +22,6 @@ type FeedPostPropsType = {
 };
 
 export function FeedPost({ post }: FeedPostPropsType) {
-  const { isLoggedIn } = useAuth();
   const [isPostLiked, setIsPostLiked] = useState<boolean>(post.is_liked);
 
   async function likePost() {

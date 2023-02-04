@@ -20,8 +20,8 @@ export function NavBar() {
     },
   ];
 
-  const [mainItems, setMainItems] = useState<NavItem[]>(mainNavItemsDefault);
-  const [userItems, setUserItems] = useState<NavItem[]>([{ label: "Log Out" }]);
+  const [mainItems] = useState<NavItem[]>(mainNavItemsDefault);
+  const [userItems] = useState<NavItem[]>([{ label: "Log Out" }]);
 
   function selectNavItem(item: NavItem) {
     navigate(item.label.toLowerCase());

@@ -4,8 +4,7 @@ import {
   InteractionButtonOverrides,
   InteractionButtonGroupOverrides,
 } from "./styled-components";
-import { useAuth } from "../../../modules";
-import { UnlikePostRequest } from "../../../util/api/models/feed/UnlikePost";
+import { useAuth } from "@atms/modules/auth/auth";
 
 type PostInteractionsProps = {
   isLiked?: boolean;
