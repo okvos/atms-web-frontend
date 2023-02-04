@@ -23,7 +23,8 @@
     "paths": {
       "@atms/components/*": ["components/*"],
       "@atms/models/*": ["util/api/models/*"],
-      "@atms/modules/*": ["modules/*"]
+      "@atms/modules/*": ["modules/*"],
+      "@atms/api/*": ["modules/api/*"]
     }
   },
   "include": [
