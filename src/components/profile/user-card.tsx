@@ -24,6 +24,9 @@ export function UserCard({ profile }: { profile: Profile }) {
   const { isLoggedIn } = useAuth();
 
   const [isFollowing, setIsFollowing] = useState<boolean | null>(null);
+  const [followerCount, setFollowerCount] = useState<number>(
+    profile.follower_count
+  );
 
   async function checkIfFollowing() {
     if (!isLoggedIn) setIsFollowing(false);
@@ -42,11 +45,17 @@ export function UserCard({ profile }: { profile: Profile }) {
     if (!currentIsFollowing) {
       const req = new PostUserFollowRequest({ userId: profile.user_id });
       const resp = await req.execute();
-      if (resp.success) setIsFollowing(true);
+      if (resp.success) {
+        setIsFollowing(true);
+        setFollowerCount((prev) => prev + 1);
+      }
     } else if (currentIsFollowing) {
       const req = new DeleteUserFollowRequest({ userId: profile.user_id });
       const resp = await req.execute();
-      if (resp.success) setIsFollowing(false);
+      if (resp.success) {
+        setIsFollowing(false);
+        setFollowerCount((prev) => prev - 1);
+      }
     }
   }
 
@@ -93,8 +102,10 @@ export function UserCard({ profile }: { profile: Profile }) {
 
         <ParagraphSmall>{profile.bio}</ParagraphSmall>
         <UserCardStatsContainer>
-          <span>132 followers</span>
-          <span>132 following</span>
+          <span>
+            {followerCount} follower{followerCount !== 1 ? "s" : ""}
+          </span>
+          <span>{profile.following_count} following</span>
         </UserCardStatsContainer>
       </UserCardInfoContainer>
     </UserCardContainer>
