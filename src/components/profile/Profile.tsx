@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Block } from "baseui/block";
-import { MessageCard } from "baseui/message-card";
 import { Grid, Cell, BEHAVIOR } from "baseui/layout-grid";
 
 import { useParams } from "react-router-dom";
-import { FeedPost } from "../feed/post/feed-post";
 import { toast } from "../../modules/notifications/toast";
 import {
   GetPostsByUserIdRequest,
@@ -12,9 +10,10 @@ import {
   GetProfileByUsernameRequest,
   GetProfileByUsernameResponse,
 } from "../../util/api";
-import { Post } from "../../util/api/models/feed/Post";
-import { Profile as ProfileModel } from "../../util/api/models/profile/Profile";
-import {FeedPostList} from "../feed/post/feed-post-list";
+import { Post } from "@atms/models/feed/Post";
+import { Profile as ProfileModel } from "@atms/models/profile/Profile";
+import { FeedPostList } from "../feed/post/feed-post-list";
+import { UserCard } from "@atms/components/profile/user-card";
 
 export default function Profile() {
   const { username } = useParams();
@@ -66,20 +65,10 @@ export default function Profile() {
       <Block marginTop={"20px"}>
         <Grid behavior={BEHAVIOR.fluid}>
           <Cell span={[12, 12, 4]}>
-            <MessageCard
-              heading={profile.username}
-              buttonLabel="Follow"
-              onClick={() => alert("click")}
-              paragraph={profile.bio}
-              image={{
-                ariaLabel: "Test",
-                src: profile.header_image_url,
-              }}
-            />
+            <UserCard profile={profile} />
           </Cell>
           <Cell span={[12, 12, 8]}>
-            {feedPosts &&
-              <FeedPostList posts={feedPosts} />}
+            {feedPosts && <FeedPostList posts={feedPosts} />}
           </Cell>
         </Grid>
       </Block>
