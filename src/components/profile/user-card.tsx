@@ -19,9 +19,11 @@ import {
   PostUserFollowRequest,
 } from "@atms/api/request/user/follow";
 import { useAuth } from "@atms/modules/auth/auth";
+import { EditProfile } from "@atms/components/profile/edit-profile";
 
 export function UserCard({ profile }: { profile: Profile }) {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, account } = useAuth();
+  const isMyProfile = profile.user_id === account.user_id;
 
   const [isFollowing, setIsFollowing] = useState<boolean | null>(null);
   const [followerCount, setFollowerCount] = useState<number>(
@@ -29,7 +31,7 @@ export function UserCard({ profile }: { profile: Profile }) {
   );
 
   async function checkIfFollowing() {
-    if (!isLoggedIn) setIsFollowing(false);
+    if (!isLoggedIn || isMyProfile) return setIsFollowing(false);
     const request = new GetUserFollowRequest({ userId: profile.user_id });
     const response = await request.execute();
     setIsFollowing(response.following);
@@ -87,16 +89,19 @@ export function UserCard({ profile }: { profile: Profile }) {
             </LabelSmall>
           </UserCardUsername>
           <UserCardButton>
-            <Button
-              kind={isFollowing === true ? KIND.secondary : KIND.primary}
-              onClick={followUser}
-              isLoading={isFollowing === null}
-              size={SIZE.compact}
-              shape={SHAPE.pill}
-              disabled={!isLoggedIn || isFollowing === null}
-            >
-              {isFollowing === true ? "Unfollow" : "Follow"}
-            </Button>
+            {!isMyProfile && (
+              <Button
+                kind={isFollowing === true ? KIND.secondary : KIND.primary}
+                onClick={followUser}
+                isLoading={isFollowing === null}
+                size={SIZE.compact}
+                shape={SHAPE.pill}
+                disabled={!isLoggedIn || isFollowing === null}
+              >
+                {isFollowing === true ? "Unfollow" : "Follow"}
+              </Button>
+            )}
+            {isMyProfile && <EditProfile />}
           </UserCardButton>
         </UserCardAuthorContainer>
 
