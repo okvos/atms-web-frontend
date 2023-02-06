@@ -15,9 +15,9 @@ type HTTPBody = {
 };
 
 export async function apiRequest(
-    method: HTTPMethod,
-    path: string,
-    body?: object | null
+  method: HTTPMethod,
+  path: string,
+  body?: object | null
 ) {
   let reqBody: HTTPBody = {
     method: method,
@@ -40,18 +40,25 @@ export class APIRequest {
   async execute() {
     if (this.method === HTTPMethod.GET) this.body = null;
     const req = await apiRequest(this.method, this.path, this.body);
-    if (!req || !req.ok || req.status === 500) {
-      throw Error("Server error. Please try again later.");
-    }
+
     let respJson;
     try {
       respJson = await req.json();
     } catch (e) {
-      throw Error("Invalid response from server");
+      throw Error("Server error. Please try again later. (1)");
     }
 
     if (respJson.error !== null && respJson.error !== false) {
-      throw Error(respJson.response.message);
+      if (typeof respJson.response === "string") throw Error(respJson.response);
+      else if (respJson.response.message !== undefined)
+        throw Error(respJson.response.message);
+      else {
+        throw Error("Server error. Please try again later. (2)");
+      }
+    }
+
+    if (!req || !req.ok) {
+      throw Error("Server error. Please try again later. (3)");
     }
 
     return this.handleResponse(respJson);
