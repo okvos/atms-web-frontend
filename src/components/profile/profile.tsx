@@ -65,7 +65,7 @@ export default function Profile() {
       <Block marginTop={"20px"}>
         <Grid behavior={BEHAVIOR.fluid}>
           <Cell span={[12, 12, 4]}>
-            <UserCard profile={profile} />
+            <UserCard username={username} profile={profile} />
           </Cell>
           <Cell span={[12, 12, 8]}>
             {feedPosts && <FeedPostList posts={feedPosts} />}

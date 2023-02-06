@@ -21,7 +21,13 @@ import {
 import { useAuth } from "@atms/modules/auth/auth";
 import { EditProfile } from "@atms/components/profile/edit-profile";
 
-export function UserCard({ profile }: { profile: Profile }) {
+export function UserCard({
+  username,
+  profile,
+}: {
+  username?: string;
+  profile: Profile;
+}) {
   const { isLoggedIn, account } = useAuth();
   const isMyProfile = profile.user_id === account.user_id;
 
@@ -29,6 +35,15 @@ export function UserCard({ profile }: { profile: Profile }) {
   const [followerCount, setFollowerCount] = useState<number>(
     profile.follower_count
   );
+
+  const [profileInfo, setProfileInfo] = useState<Profile>(profile);
+  function updateProfileInfo(username: string, bio: string) {
+    setProfileInfo((prev) => ({
+      ...profileInfo,
+      username: username,
+      bio: bio,
+    }));
+  }
 
   async function checkIfFollowing() {
     if (!isLoggedIn || isMyProfile) return setIsFollowing(false);
@@ -83,9 +98,9 @@ export function UserCard({ profile }: { profile: Profile }) {
             src="https://avatars.dicebear.com/api/human/yard.svg?width=285&mood=happy"
           />
           <UserCardUsername>
-            <LabelLarge>{profile.username}</LabelLarge>
+            <LabelLarge>{profileInfo.username}</LabelLarge>
             <LabelSmall color={theme.colors.contentSecondary}>
-              @{profile.username}
+              @{username}
             </LabelSmall>
           </UserCardUsername>
           <UserCardButton>
@@ -101,11 +116,13 @@ export function UserCard({ profile }: { profile: Profile }) {
                 {isFollowing === true ? "Unfollow" : "Follow"}
               </Button>
             )}
-            {isMyProfile && <EditProfile />}
+            {isMyProfile && (
+              <EditProfile updateProfileInfo={updateProfileInfo} />
+            )}
           </UserCardButton>
         </UserCardAuthorContainer>
 
-        <ParagraphSmall>{profile.bio}</ParagraphSmall>
+        <ParagraphSmall>{profileInfo.bio}</ParagraphSmall>
         <UserCardStatsContainer>
           <span>
             {followerCount} follower{followerCount !== 1 ? "s" : ""}
