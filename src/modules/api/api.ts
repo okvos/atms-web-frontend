@@ -1,5 +1,6 @@
 import { APIResponse } from "./models/Response";
 import { API_URL } from "../../config/constants";
+import {toast} from "@atms/modules/notifications/toast";
 
 export enum HTTPMethod {
   GET = "GET",
@@ -49,7 +50,10 @@ export class APIRequest {
     }
 
     if (respJson.error !== null && respJson.error !== false) {
-      if (typeof respJson.response === "string") throw Error(respJson.response);
+      if (typeof respJson.response === "string") {
+        toast("error", respJson.response);
+        throw Error(respJson.response);
+      }
       else if (respJson.response.message !== undefined)
         throw Error(respJson.response.message);
       else {

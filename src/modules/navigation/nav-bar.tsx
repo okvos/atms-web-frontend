@@ -21,13 +21,21 @@ export function NavBar() {
   ];
 
   const [mainItems] = useState<NavItem[]>(mainNavItemsDefault);
-  const [userItems] = useState<NavItem[]>([{ label: "Log Out" }]);
+  const [userItems] = useState<NavItem[]>([{ label: "Profile"}, { label: "Log Out" }]);
 
   function selectNavItem(item: NavItem) {
     let route = item.label.toLowerCase();
-    if (route === "sign in")
-      route = "account";
-    navigate(item.label.toLowerCase());
+    switch (route) {
+      case "sign in":
+        route = "account"; break;
+      case "profile":
+        route = `profile/${account.username}`; break;
+      case "log out":
+        window.localStorage.clear();
+        document.location.reload();
+        return;
+    }
+    navigate(route);
   }
 
   type AppNavBarPropsType = {
@@ -43,6 +51,7 @@ export function NavBar() {
     title: APP_NAME,
     mainItems: mainItems,
     onMainItemSelect: selectNavItem,
+    onUserItemSelect: selectNavItem
   };
 
   if (isLoggedIn) {
