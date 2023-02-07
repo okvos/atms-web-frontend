@@ -2,13 +2,13 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavBar } from "./modules";
 
-const SignIn = lazy(() => import("./components/account/sign-in"));
+const Account = lazy(() => import("@atms/components/account/account"));
 const Profile = lazy(() => import("./components/profile/profile"));
 
 export const routes = [
   {
-    path: "/sign-in",
-    component: SignIn,
+    path: "/account",
+    component: Account,
   },
   {
     path: "/profile/:username",

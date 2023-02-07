@@ -24,6 +24,9 @@ export function NavBar() {
   const [userItems] = useState<NavItem[]>([{ label: "Log Out" }]);
 
   function selectNavItem(item: NavItem) {
+    let route = item.label.toLowerCase();
+    if (route === "sign in")
+      route = "account";
     navigate(item.label.toLowerCase());
   }
 
