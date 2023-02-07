@@ -13,7 +13,7 @@ import { Input } from "baseui/input";
 import { FormControl } from "baseui/form-control";
 import { FileUploader } from "baseui/file-uploader";
 import { PutUserProfileRequest } from "@atms/api/request/user/profile";
-import toast from "react-hot-toast";
+import { toast } from "@atms-modules";
 
 export function EditProfile({
   updateProfileInfo,
@@ -36,10 +36,10 @@ export function EditProfile({
         header_image_url: "",
       });
       await req.execute();
-      toast.success("Your profile has been updated");
+      toast("success", "Your profile has been updated");
       updateProfileInfo(updatedDisplayName, updatedBio);
     } catch (e: any) {
-      toast.error(e.message);
+      toast("error", e.message);
     } finally {
       setIsUpdating(false);
     }

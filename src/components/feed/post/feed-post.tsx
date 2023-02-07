@@ -9,12 +9,11 @@ import {
 } from "./styled-components";
 import { LabelMedium } from "baseui/typography";
 import { PostInteractions } from "./post-interactions";
-import { UnlikePostRequest } from "@atms/models/feed/UnlikePost";
 import {
-  LikePostRequest,
-  LikePostResponseType,
-} from "@atms/models/feed/LikePost";
-import { Post } from "@atms/models/feed/Post";
+  PostLikePostIdRequest,
+  DeletePostIdLikeRequest,
+} from "@atms/api/request/post/id/like";
+import { Post } from "@atms/api/models/Post";
 import moment from "moment";
 
 type FeedPostPropsType = {
@@ -28,11 +27,11 @@ export function FeedPost({ post }: FeedPostPropsType) {
     let req;
     // if post is liked, the request will be to Unlike
     if (isPostLiked) {
-      req = UnlikePostRequest;
-    } else req = LikePostRequest; // otherwise, the request is to Like
+      req = DeletePostIdLikeRequest;
+    } else req = PostLikePostIdRequest; // otherwise, the request is to Like
 
-    req = new req({ post_id: post.post_id });
-    let resp: LikePostResponseType = await req.execute();
+    req = new req({ postId: post.post_id });
+    let resp = await req.execute();
 
     // if the request was a success, update like state
     if (resp.success) {
@@ -57,9 +56,7 @@ export function FeedPost({ post }: FeedPostPropsType) {
           />
           <PostAuthorContainer>
             <LabelMedium>{post.username}</LabelMedium>
-            <PostTitleDate>
-              {moment(post.date * 1000).fromNow()}
-            </PostTitleDate>
+            <PostTitleDate>{moment(post.date * 1000).fromNow()}</PostTitleDate>
           </PostAuthorContainer>
         </PostTitleContainer>
 
