@@ -5,8 +5,11 @@ import { Button } from "baseui/button";
 import { PutAuthenticateRequest } from "@atms/api/request/authenticate";
 import { useAuth } from "@atms-modules";
 import { toast } from "@atms-modules";
+import { useNavigate } from "react-router-dom";
 
 export function SignInForm() {
+  const navigate = useNavigate();
+
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const usernameRef = useRef<any>(null);
@@ -26,6 +29,11 @@ export function SignInForm() {
 
       if (response && response.user) {
         auth.login(response.user.user_id, response.user.username);
+        toast(
+          "success",
+          `Welcome back, ${response.user.username}! Redirecting...`
+        );
+        navigate(`/profile/${response.user.username}`);
       }
     } catch (e: any) {
       setIsLoggingIn(false);

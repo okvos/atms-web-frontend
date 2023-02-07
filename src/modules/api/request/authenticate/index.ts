@@ -1,5 +1,5 @@
 import { User } from "@atms/api/models";
-import { APIRequest, HTTPMethod } from "../api";
+import { APIRequest, HTTPMethod } from "../../api";
 
 type PutAuthenticateRequestType = {
   username: string;
