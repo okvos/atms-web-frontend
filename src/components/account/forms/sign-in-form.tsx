@@ -3,7 +3,7 @@ import { FormControl } from "baseui/form-control";
 import { Input } from "baseui/input";
 import { Button } from "baseui/button";
 import { PutAuthenticateRequest } from "@atms/api/request/authenticate";
-import { useAuth } from "./auth";
+import { useAuth } from "@atms-modules";
 import { toast } from "@atms-modules";
 
 export function SignInForm() {
