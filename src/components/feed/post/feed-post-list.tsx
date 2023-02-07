@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "../../../util/api/models/feed/Post";
+import { Post } from "@atms/api/models/Post";
 import { FeedPost } from "./feed-post";
 import "./feed-list.css";
 

@@ -2,14 +2,11 @@ import React, { SyntheticEvent, useRef, useState } from "react";
 import { FormControl } from "baseui/form-control";
 import { Input } from "baseui/input";
 import { Button } from "baseui/button";
-import {
-  AuthenticateRequest,
-  AuthenticateResponse,
-} from "../../util/api/models/Authenticate";
-import { toast } from "../notifications/toast";
+import { PutAuthenticateRequest } from "@atms/api/request/authenticate";
 import { useAuth } from "./auth";
+import { toast } from "@atms-modules";
 
-export function SignInForm(props: any) {
+export function SignInForm() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const usernameRef = useRef<any>(null);
@@ -20,12 +17,12 @@ export function SignInForm(props: any) {
   const signInUser = async (e: SyntheticEvent) => {
     setIsLoggingIn(true);
 
-    let request = new AuthenticateRequest({
+    let request = new PutAuthenticateRequest({
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     });
     try {
-      let response: AuthenticateResponse = await request.execute();
+      let response = await request.execute();
 
       if (response && response.user) {
         auth.login(response.user.user_id, response.user.username);

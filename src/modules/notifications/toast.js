@@ -1,6 +1,5 @@
 import { toast as hotToast, Toaster } from "react-hot-toast";
-import {theme} from "../../config/theme";
-
+import { theme } from "@atms-config/theme";
 
 export function toast(type, message) {
   hotToast[type](message, {
@@ -8,33 +7,33 @@ export function toast(type, message) {
   });
 }
 
-export function Toast () {
-  return <Toaster
-
+export function Toast() {
+  return (
+    <Toaster
       position="bottom-right"
       toastOptions={{
         style: {
-          fontFamily: theme.typography.font100.fontFamily
+          fontFamily: theme.typography.font100.fontFamily,
         },
         success: {
           style: {
             backgroundColor: theme.colors.toastPositiveBackground,
-            color: theme.colors.toastPositiveText
-          }
+            color: theme.colors.toastPositiveText,
+          },
         },
         error: {
           style: {
             backgroundColor: theme.colors.toastNegativeBackground,
-            color: theme.colors.toastNegativeText
-          }
+            color: theme.colors.toastNegativeText,
+          },
         },
         blank: {
           style: {
             backgroundColor: theme.colors.toastInfoBackground,
-            color: theme.colors.toastInfoText
-          }
-        }
+            color: theme.colors.toastInfoText,
+          },
+        },
       }}
-
-  />
+    />
+  );
 }

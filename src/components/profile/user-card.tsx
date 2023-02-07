@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Profile } from "@atms/models/profile/Profile";
+import { Profile } from "@atms/api/models";
 import {
   UserCardAuthorContainer,
   UserCardButton,
@@ -17,7 +17,7 @@ import {
   DeleteUserFollowRequest,
   GetUserFollowRequest,
   PostUserFollowRequest,
-} from "@atms/api/request/user/follow";
+} from "@atms/api/request/user/id/follow";
 import { useAuth } from "@atms/modules/auth/auth";
 import { EditProfile } from "@atms/components/profile/edit-profile";
 

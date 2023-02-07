@@ -1,5 +1,5 @@
 import React from "react";
-import { SignInForm } from "../../modules";
+import { SignInForm } from "@atms/modules/auth/sign-in-form";
 import { Heading, HeadingLevel } from "baseui/heading";
 import { BEHAVIOR, Cell, Grid } from "baseui/layout-grid";
 
