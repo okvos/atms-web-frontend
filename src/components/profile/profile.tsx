@@ -23,6 +23,10 @@ export default function Profile() {
 
   const { isLoggedIn, account } = useAuth();
 
+  function addFeedPost(post: Post) {
+    setFeedPosts((prev) => [post, ...prev]);
+  }
+
   async function fetchProfile() {
     if (!username) return toast("error", "Profile not found!");
 
@@ -72,7 +76,7 @@ export default function Profile() {
             <UserCard username={username} profile={profile} />
           </Cell>
           <Cell span={[12, 12, 8]}>
-            {isMyProfile && <CreatePost />}
+            {isMyProfile && <CreatePost addFeedPost={addFeedPost} />}
             {feedPosts.length === 0 && <NoPosts />}
             {feedPosts && <FeedPostList posts={feedPosts} />}
           </Cell>
