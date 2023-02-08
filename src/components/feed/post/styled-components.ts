@@ -45,10 +45,19 @@ export const InteractionButtonOverrides = {
   BaseButton: {
     style: ({ $theme, $isSelected }: any) => ({
       backgroundColor:
-          $isSelected === true
-              ? $theme.colors.inputFillActive
-              : $theme.colors.inputFill,
+        $isSelected === true
+          ? $theme.colors.inputFillActive
+          : $theme.colors.inputFill,
       color: $theme.colors.buttonSecondaryText,
     }),
   },
 };
+
+export const CreatePostContainer = styled("div", ({ $theme }) => ({
+  ...$theme.typography.font200,
+  padding: "1em 2em",
+  backgroundColor: $theme.colors.backgroundSecondary,
+  borderRadius: $theme.borders.radius400,
+  color: $theme.colors.contentSecondary,
+  marginBottom: "1em",
+}));

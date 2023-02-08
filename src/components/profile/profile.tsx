@@ -11,11 +11,17 @@ import { Profile as ProfileModel } from "@atms/api/models/Profile";
 import { FeedPostList } from "../feed/post/feed-post-list";
 import { UserCard } from "@atms/components/profile/user-card";
 import { NoPosts } from "@atms/components/feed/no-posts";
+import { CreatePost } from "@atms/components/feed/post/create-post";
+import { useAuth } from "@atms/modules/auth/auth";
 
 export default function Profile() {
   const { username } = useParams();
   const [profile, setProfile] = useState<ProfileModel | null>(null);
   const [feedPosts, setFeedPosts] = useState<Post[]>([]);
+
+  const [isMyProfile, setIsMyProfile] = useState<boolean>(false);
+
+  const { isLoggedIn, account } = useAuth();
 
   async function fetchProfile() {
     if (!username) return toast("error", "Profile not found!");
@@ -28,6 +34,8 @@ export default function Profile() {
     try {
       let response = await request.execute();
       setProfile(response.profile);
+      if (isLoggedIn)
+        setIsMyProfile(account.user_id === response.profile.user_id);
 
       // fetch feed posts after profile fetch success
       fetchFeedPosts(response.profile.user_id);
@@ -48,8 +56,9 @@ export default function Profile() {
   }
 
   useEffect(() => {
+    setProfile(null);
     fetchProfile();
-  }, []);
+  }, [username]);
 
   if (!profile) {
     return <></>;
@@ -63,6 +72,7 @@ export default function Profile() {
             <UserCard username={username} profile={profile} />
           </Cell>
           <Cell span={[12, 12, 8]}>
+            {isMyProfile && <CreatePost />}
             {feedPosts.length === 0 && <NoPosts />}
             {feedPosts && <FeedPostList posts={feedPosts} />}
           </Cell>

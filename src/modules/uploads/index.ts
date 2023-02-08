@@ -18,7 +18,7 @@ function readFileAsync(file: File) {
 }
 
 export async function uploadImage(imageFile: File): Promise<string> {
-  let file = <ArrayBuffer>await readFileAsync(imageFile);
+  let file = await readFileAsync(imageFile) as ArrayBuffer;
   let arr = new Uint8Array(file).subarray(0, 4);
   let header = "";
   let imageType;
