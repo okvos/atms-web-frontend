@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { CreatePostContainer } from "@atms/components/feed/post/styled-components";
+import {
+  CreatePostContainer,
+  CreatePostShareContainer,
+} from "@atms/components/feed/post/styled-components";
 import { Textarea } from "baseui/textarea";
 import { FormControl } from "baseui/form-control";
 import { Button, SIZE } from "baseui/button";
@@ -54,11 +57,24 @@ export function CreatePost({
   return (
     <CreatePostContainer>
       <FormControl
-        label="Create a Post"
         caption={
-          postText.length > 0
-            ? `${postText.length} / 1000 characters`
-            : undefined
+          postText.length > 0 ? (
+            <CreatePostShareContainer>
+              {postText.length} / 1000 characters
+              <Button
+                onClick={sharePost}
+                isLoading={isSharing}
+                overrides={{
+                  BaseButton: {
+                    style: ButtonOverrides,
+                  },
+                }}
+                size={SIZE.compact}
+              >
+                Share Post
+              </Button>
+            </CreatePostShareContainer>
+          ) : undefined
         }
       >
         <Textarea
@@ -66,20 +82,6 @@ export function CreatePost({
           placeholder="What's on your mind?"
         />
       </FormControl>
-      {postText !== "" && (
-        <Button
-          onClick={sharePost}
-          isLoading={isSharing}
-          overrides={{
-            BaseButton: {
-              style: ButtonOverrides,
-            },
-          }}
-          size={SIZE.compact}
-        >
-          Share Post
-        </Button>
-      )}
     </CreatePostContainer>
   );
 }
