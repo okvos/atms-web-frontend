@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useStyletron } from "baseui";
 import { AppNavBar, NavItem } from "baseui/app-nav-bar";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { APP_NAME } from "../../config/constants";
 import { useAuth } from "../auth/auth";
 
@@ -44,7 +44,7 @@ export function NavBar() {
   }
 
   type AppNavBarPropsType = {
-    title: string;
+    title: ReactNode;
     mainItems: NavItem[];
     userItems?: NavItem[];
     onMainItemSelect: (item: NavItem) => void;
@@ -53,7 +53,11 @@ export function NavBar() {
   };
 
   let AppNavBarProps: AppNavBarPropsType = {
-    title: APP_NAME,
+    title: (
+      <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+        {APP_NAME}
+      </Link>
+    ),
     mainItems: mainItems,
     onMainItemSelect: selectNavItem,
     onUserItemSelect: selectNavItem,

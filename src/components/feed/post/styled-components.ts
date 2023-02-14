@@ -55,9 +55,14 @@ export const InteractionButtonOverrides = {
 
 export const CreatePostContainer = styled("div", ({ $theme }) => ({
   ...$theme.typography.font200,
-  padding: "1em 2em",
   backgroundColor: $theme.colors.backgroundSecondary,
   borderRadius: $theme.borders.radius400,
   color: $theme.colors.contentSecondary,
   marginBottom: "1em",
+}));
+
+export const CreatePostShareContainer = styled("div", () => ({
+  padding: "1em",
+  display: "flex",
+  alignItems: "center",
 }));
