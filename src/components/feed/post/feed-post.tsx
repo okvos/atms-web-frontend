@@ -6,6 +6,7 @@ import {
   PostContainer,
   PostAuthorContainer,
   PostTitleDate,
+  PostCommentsContainer,
 } from "./styled-components";
 import { LabelMedium } from "baseui/typography";
 import { PostInteractions } from "./post-interactions";
@@ -15,10 +16,24 @@ import {
 } from "@atms/api/request/post/id/like";
 import { Post } from "@atms/api/models/Post";
 import moment from "moment";
+import { CommentList } from "@atms/components/feed/comment/comment-list";
+import {Comment} from "@atms/api/models/Comment";
 
 type FeedPostPropsType = {
   post: Post;
 };
+
+const testComments: Comment[] = [
+  {
+    author: {
+      user_id: 0,
+      username: "Test",
+      header_image_url: ""
+    },
+    text: "This is a test comment",
+    date: 0
+  }
+]
 
 export function FeedPost({ post }: FeedPostPropsType) {
   const [isPostLiked, setIsPostLiked] = useState<boolean>(post.is_liked);
@@ -63,6 +78,9 @@ export function FeedPost({ post }: FeedPostPropsType) {
         <PostTextContainer>{post.text}</PostTextContainer>
 
         <PostInteractions isLiked={isPostLiked} likePost={likePost} />
+        <PostCommentsContainer>
+          <CommentList total_comments={2} comments={testComments} />
+        </PostCommentsContainer>
       </div>
     </PostContainer>
   );

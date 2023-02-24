@@ -23,7 +23,7 @@ export const PostTitleDate = styled("span", ({ $theme }) => ({
 }));
 
 export const PostContainer = styled("section", ({ $theme }) => ({
-  backgroundColor: $theme.colors.inputFill,
+  backgroundColor: $theme.colors.backgroundSecondary,
   borderRadius: $theme.borders.radius400,
   width: "100%",
   color: $theme.colors.primary,
@@ -34,9 +34,8 @@ export const InteractionButtonGroupOverrides = {
   Root: {
     style: ({ $theme }: any) => ({
       borderTop: `1.2px solid ${$theme.borders.border200.borderColor}`,
-      backgroundColor: $theme.colors.inputFill,
+      backgroundColor: $theme.colors.backgroundSecondary,
       justifyContent: "space-around",
-      paddingTop: "0.5em",
     }),
   },
 };
@@ -44,10 +43,11 @@ export const InteractionButtonGroupOverrides = {
 export const InteractionButtonOverrides = {
   BaseButton: {
     style: ({ $theme, $isSelected }: any) => ({
+      borderRadius: 0,
       backgroundColor:
         $isSelected === true
           ? $theme.colors.inputFillActive
-          : $theme.colors.inputFill,
+          : $theme.colors.backgroundSecondary,
       color: $theme.colors.buttonSecondaryText,
     }),
   },
@@ -65,4 +65,9 @@ export const CreatePostShareContainer = styled("div", () => ({
   padding: "1em",
   display: "flex",
   alignItems: "center",
+}));
+
+export const PostCommentsContainer = styled("div", ({ $theme }) => ({
+  paddingTop: "0.5em",
+  borderTop: `1.2px solid ${$theme.borders.border200.borderColor}`,
 }));
