@@ -42,6 +42,9 @@ export function CreatePost({
         text: postText,
         date: new Date().getTime() / 1000,
         is_liked: false,
+        num_likes: 0,
+        num_comments: 0,
+        num_shares: 0,
       };
       addFeedPost(post);
     } catch (e) {

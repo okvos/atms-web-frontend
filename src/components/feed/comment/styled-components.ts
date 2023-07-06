@@ -3,7 +3,6 @@ import { styled } from "baseui";
 export const CommentSendButtonOverrides = {
   BaseButton: {
     style: ({ $theme, $isSelected }: any) => ({
-      borderRadius: 0,
       backgroundColor:
         $isSelected === true ? $theme.colors.inputFillActive : "transparent",
       color: $theme.colors.buttonSecondaryText,

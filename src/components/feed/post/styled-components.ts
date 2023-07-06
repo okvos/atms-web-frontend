@@ -42,12 +42,8 @@ export const InteractionButtonGroupOverrides = {
 
 export const InteractionButtonOverrides = {
   BaseButton: {
-    style: ({ $theme, $isSelected }: any) => ({
-      borderRadius: 0,
-      backgroundColor:
-        $isSelected === true
-          ? $theme.colors.inputFillActive
-          : $theme.colors.backgroundSecondary,
+    style: ({ $theme }: any) => ({
+      backgroundColor: $theme.colors.backgroundSecondary,
       color: $theme.colors.buttonSecondaryText,
     }),
   },
@@ -69,5 +65,13 @@ export const CreatePostShareContainer = styled("div", () => ({
 
 export const PostCommentsContainer = styled("div", ({ $theme }) => ({
   paddingTop: "0.5em",
+  paddingBottom: "0.5em",
   borderTop: `1.2px solid ${$theme.borders.border200.borderColor}`,
+}));
+
+export const InteractionLabel = styled("span", ({ $theme }) => ({
+  color: $theme.colors.primary400,
+  marginLeft: "5px",
+  fontWeight: "initial",
+  fontSize: "smaller",
 }));

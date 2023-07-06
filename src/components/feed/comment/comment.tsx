@@ -7,7 +7,6 @@ import {
   CommentTextBubble,
 } from "@atms/components/feed/comment/styled-components";
 import { Avatar } from "baseui/avatar";
-import { LabelSmall } from "baseui/typography";
 import moment from "moment/moment";
 
 type CommentPropsType = {
