@@ -63,7 +63,7 @@ export function CreatePost({
         caption={
           postText.length > 0 ? (
             <CreatePostShareContainer>
-              {postText.length} / 1000 characters
+              {postText.length} / 1000 characters. Markdown supported.
               <Button
                 onClick={sharePost}
                 isLoading={isSharing}

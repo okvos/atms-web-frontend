@@ -17,6 +17,7 @@ import {
 import { Post } from "@atms/api/models/Post";
 import moment from "moment";
 import { CommentList } from "@atms/components/feed/comment/comment-list";
+import ReactMarkdown from "react-markdown";
 
 type FeedPostPropsType = {
   post: Post;
@@ -67,7 +68,9 @@ export function FeedPost({ post }: FeedPostPropsType) {
           </PostAuthorContainer>
         </PostTitleContainer>
 
-        <PostTextContainer>{post.text}</PostTextContainer>
+        <PostTextContainer>
+          <ReactMarkdown>{post.text}</ReactMarkdown>
+        </PostTextContainer>
 
         <PostInteractions
           totalLikes={totalPostLikes}
