@@ -5,4 +5,7 @@ export type Post = {
   text: string;
   is_liked: boolean;
   username: string;
+  num_comments: number;
+  num_likes: number;
+  num_shares: number;
 };

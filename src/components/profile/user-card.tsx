@@ -1,4 +1,4 @@
-import React, { Profiler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Profile } from "@atms/api/models";
 import {
   UserCardAuthorContainer,

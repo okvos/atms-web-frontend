@@ -17,26 +17,15 @@ import {
 import { Post } from "@atms/api/models/Post";
 import moment from "moment";
 import { CommentList } from "@atms/components/feed/comment/comment-list";
-import {Comment} from "@atms/api/models/Comment";
 
 type FeedPostPropsType = {
   post: Post;
 };
 
-const testComments: Comment[] = [
-  {
-    author: {
-      user_id: 0,
-      username: "Test",
-      header_image_url: ""
-    },
-    text: "This is a test comment",
-    date: 0
-  }
-]
-
 export function FeedPost({ post }: FeedPostPropsType) {
+  const [totalPostLikes, setTotalPostLikes] = useState<number>(post.num_likes);
   const [isPostLiked, setIsPostLiked] = useState<boolean>(post.is_liked);
+  const [showComments, setShowComments] = useState<boolean>(false);
 
   async function likePost() {
     let req;
@@ -50,12 +39,15 @@ export function FeedPost({ post }: FeedPostPropsType) {
 
     // if the request was a success, update like state
     if (resp.success) {
+      if (isPostLiked) {
+        setTotalPostLikes((prevState) => prevState - 1);
+      } else setTotalPostLikes((prevState) => prevState + 1);
       setIsPostLiked(!isPostLiked);
     }
   }
   return (
     <PostContainer>
-      <div style={{ padding: "0.7em" }}>
+      <div style={{ padding: "0.7em", paddingBottom: "0" }}>
         <PostTitleContainer>
           <Avatar
             overrides={{
@@ -77,10 +69,21 @@ export function FeedPost({ post }: FeedPostPropsType) {
 
         <PostTextContainer>{post.text}</PostTextContainer>
 
-        <PostInteractions isLiked={isPostLiked} likePost={likePost} />
-        <PostCommentsContainer>
-          <CommentList total_comments={2} comments={testComments} />
-        </PostCommentsContainer>
+        <PostInteractions
+          totalLikes={totalPostLikes}
+          totalComments={post.num_comments}
+          isLiked={isPostLiked}
+          likePost={likePost}
+          showComments={() => setShowComments(true)}
+        />
+        {showComments && (
+          <PostCommentsContainer>
+            <CommentList
+              postId={post.post_id}
+              totalComments={post.num_comments}
+            />
+          </PostCommentsContainer>
+        )}
       </div>
     </PostContainer>
   );
